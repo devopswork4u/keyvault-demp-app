@@ -1,8 +1,77 @@
 <!DOCTYPE html>
-<html>
-<head><title>Secret Viewer</title></head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>🔐 Secret Viewer</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f6f8;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: inline-block;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .secret-container {
+            position: relative;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .secret-value {
+            font-size: 18px;
+            letter-spacing: 2px;
+            padding: 10px 15px;
+            background: #eee;
+            border-radius: 6px;
+            user-select: none;
+        }
+
+        .eye-icon {
+            position: absolute;
+            right: -35px;
+            top: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .eye-icon:hover {
+            color: #0078D7;
+        }
+    </style>
+</head>
 <body>
-    <h1>Secret:</h1>
-    <p>{{ secret_value }}</p>
+    <div class="container">
+        <h1>🔐 Azure Key Vault Secret Viewer</h1>
+        <div class="secret-container">
+            <span class="secret-value" id="secret" style="filter: blur(6px);">
+                {{ secret_value }}
+            </span>
+            <span class="eye-icon" onclick="toggleSecret()" title="Show/Hide secret">👁️</span>
+        </div>
+    </div>
+
+    <script>
+        function toggleSecret() {
+            const secret = document.getElementById("secret");
+            if (secret.style.filter === "blur(6px)") {
+                secret.style.filter = "none";
+            } else {
+                secret.style.filter = "blur(6px)";
+            }
+        }
+    </script>
 </body>
 </html>
