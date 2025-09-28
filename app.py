@@ -13,10 +13,7 @@ app = Flask(__name__)
 # Read environment variables
 KEY_VAULT_URL = os.environ.get("KEY_VAULT_URL")
 SECRET_NAME = os.environ.get("SECRET_NAME")
-
-print(f"[DEBUG] Environment Variables:")
-print(f"KEY_VAULT_URL = {KEY_VAULT_URL}")
-print(f"SECRET_NAME = {SECRET_NAME}")
+SQLDB_CONNECTION = os.environ.get("SQLDB_CONNECTION")
 
 # Initialize client
 credential = DefaultAzureCredential()
@@ -26,6 +23,8 @@ secret_value = "Not retrieved"
 try:
     client = SecretClient(vault_url=KEY_VAULT_URL, credential=credential)
     secret = client.get_secret(SECRET_NAME)
+    secret = client.get_secret(SQLDB_CONNECTION)
+
     secret_value = secret.value
     print(f"[INFO] Retrieved secret: {SECRET_NAME}")
 except Exception as e:
