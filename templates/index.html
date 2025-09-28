@@ -51,18 +51,28 @@
         .eye-icon:hover {
             color: #0078D7;
         }
+
+        .error {
+            color: red;
+            font-weight: bold;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🔐 Azure Key Vault Secret Viewer</h1>
 
-        {% for idx, char in enumerate(secret_value) %}
-        <div class="char-line">
-            <span id="char{{ idx }}" class="char">{{ char }}</span>
-            <span class="eye-icon" onclick="toggleChar('{{ idx }}')" title="Show/Hide character">👁️</span>
-        </div>
-        {% endfor %}
+        {% if secret_value.startswith("[Error]") %}
+            <div class="error">{{ secret_value }}</div>
+        {% else %}
+            {% for idx, char in enumerate(secret_value) %}
+            <div class="char-line">
+                <span id="char{{ idx }}" class="char">{{ char }}</span>
+                <span class="eye-icon" onclick="toggleChar('{{ idx }}')" title="Show/Hide character">👁️</span>
+            </div>
+            {% endfor %}
+        {% endif %}
     </div>
 
     <script>
