@@ -7,11 +7,11 @@ app = Flask(__name__)
 
 # Get environment variables
 KEY_VAULT_URL = os.environ.get("KEY_VAULT_URL")
-SQLDB_SECRET_NAME = os.environ.get("SQLDB_SECRET_NAME")
+SQLDB_PASSWORD = os.environ.get("SQLDB_PASSWORD")
 
 # Check if both environment variables are set
-if not KEY_VAULT_URL or not SQLDB_SECRET_NAME:
-    secret_value = "[Error] Environment variables KEY_VAULT_URL or SQLDB_SECRET_NAME not set."
+if not KEY_VAULT_URL or not SQLDB_PASSWORD:
+    secret_value = "[Error] Environment variables KEY_VAULT_URL or SQLDB_PASSWORD not set."
 else:
     try:
         # Initialize credential and secret client
@@ -19,7 +19,7 @@ else:
         client = SecretClient(vault_url=KEY_VAULT_URL, credential=credential)
 
         # Fetch the secret value
-        secret_value = client.get_secret(SQLDB_SECRET_NAME).value
+        secret_value = client.get_secret(SQLDB_PASSWORD).value
     except Exception as e:
         secret_value = f"[Error] {str(e)}"
 
