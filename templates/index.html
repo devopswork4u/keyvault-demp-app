@@ -17,31 +17,42 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             display: inline-block;
+            text-align: left;
         }
 
         h1 {
             color: #333;
+            text-align: center;
         }
 
-        .secret-container {
-            position: relative;
-            display: inline-block;
-            margin-top: 20px;
+        .secret-block {
+            margin-bottom: 25px;
         }
 
-        .secret-value {
-            font-size: 18px;
-            letter-spacing: 2px;
-            padding: 10px 15px;
+        .secret-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .secret-line {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+
+        .char {
+            padding: 8px 10px;
             background: #eee;
-            border-radius: 6px;
+            border-radius: 5px;
             user-select: none;
+            filter: blur(6px);
+            margin-right: 5px;
+            min-width: 20px;
+            text-align: center;
         }
 
         .eye-icon {
-            position: absolute;
-            right: -35px;
-            top: 5px;
             cursor: pointer;
             font-size: 18px;
             color: #333;
@@ -54,22 +65,29 @@
 </head>
 <body>
     <div class="container">
-        <h1>🔐 Azure Key Vault Secret Viewer</h1>
-        <div class="secret-container">
-            <span class="secret-value" id="secret" style="filter: blur(6px);">
-                {{ secret_value }}
-            </span>
-            <span class="eye-icon" onclick="toggleSecret()" title="Show/Hide secret">👁️</span>
+        <h1>🔐 Azure Key Vault Secrets</h1>
+
+        {% for secret_name, secret_value in secrets.items() %}
+        <div class="secret-block">
+            <span class="secret-label">{{ secret_name }}</span>
+
+            {% for idx, char in enumerate(secret_value) %}
+            <div class="secret-line">
+                <span class="char" id="char_{{ secret_name }}_{{ idx }}">{{ char }}</span>
+                <span class="eye-icon" onclick="toggleChar('{{ secret_name }}_{{ idx }}')">👁️</span>
+            </div>
+            {% endfor %}
         </div>
+        {% endfor %}
     </div>
 
     <script>
-        function toggleSecret() {
-            const secret = document.getElementById("secret");
-            if (secret.style.filter === "blur(6px)") {
-                secret.style.filter = "none";
+        function toggleChar(id) {
+            const el = document.getElementById("char_" + id);
+            if (el.style.filter === "blur(6px)") {
+                el.style.filter = "none";
             } else {
-                secret.style.filter = "blur(6px)";
+                el.style.filter = "blur(6px)";
             }
         }
     </script>
