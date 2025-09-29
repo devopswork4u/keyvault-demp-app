@@ -9,8 +9,7 @@ app = Flask(__name__)
 # Read environment variables
 KEY_VAULT_URL = os.environ.get("KEY_VAULT_URL")
 SECRET_NAMES = [
-    os.environ.get("SECRET_NAME"),
-    os.environ.get("SQLDB_PASSWORD")
+    os.environ.get("SQLDB_CONNECTION")
 ]
 
 # Initialize client
