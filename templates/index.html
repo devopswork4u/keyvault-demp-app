@@ -71,12 +71,10 @@
         <div class="secret-block">
             <span class="secret-label">{{ secret_name }}</span>
 
-            {% for idx, char in enumerate(secret_value) %}
-            <div class="secret-line">
-                <span class="char" id="char_{{ secret_name }}_{{ idx }}">{{ char }}</span>
-                <span class="eye-icon" onclick="toggleChar('{{ secret_name }}_{{ idx }}')">👁️</span>
-            </div>
-            {% endfor %}
+<div class="secret-line">
+    <span class="char" id="char_{{ secret_name }}">{{ secret_value }}</span>
+    <span class="eye-icon" onclick="toggleChar('{{ secret_name }}')">👁️</span>
+</div>
         </div>
         {% endfor %}
     </div>
